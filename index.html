@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#7048d9">
+<title>Salini Webworks - Client Manager</title>
+<style>
+:root {
+  --purple: #7048d9;
+  --light-purple: #f1ecff;
+  --bg: #f7f6fb;
+  --text: #29243b;
+  --muted: #777286;
+  --border: #e9e5f1;
+  --green: #16845b;
+  --orange: #b76a12;
+  --red: #c43d55;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding-bottom: 88px;
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.dp img{
+width:100px;
+height:100px;
+float:left;
+border-radius:70px;
+padding:5px 5px 0px 0px;
+}
+
+
+header {
+  padding: 23px 18px;
+  color: white;
+  background: linear-gradient(135deg,#7048d9,#987bf0);
+  border-radius: 0 0 24px 24px;
+ 
+}
+.brand { font-size: 13px; letter-spacing: 2px; }
+header h1 { margin: 8px 0 5px; font-size: 24px; }
+header p { margin: 0; font-size: 13px; opacity: .9; }
+main { max-width: 760px; margin: auto; padding: 16px 13px; }
+.page { display: none; }
+.page.active { display: block; }
+.heading {
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 10px; margin: 5px 2px 15px;
+}
+.heading h2 { margin: 0; font-size: 20px; }
+.muted { color: var(--muted); font-size: 12px; margin-top: 5px; }
+button, input, select, textarea { font: inherit; }
+button {
+  cursor: pointer; border: 0; border-radius: 11px;
+  padding: 11px 13px; font-weight: bold;
+}
+.primary { background: var(--purple); color: white; }
+.soft { background: var(--light-purple); color: var(--purple); }
+.danger { background: #fff0f2; color: var(--red); }
+.outline { background: white; color: var(--purple); border: 1px solid #dcd2ff; }
+input, select, textarea {
+  width: 100%; padding: 12px; border: 1px solid var(--border);
+  border-radius: 10px; background: white; color: var(--text);
+}
+textarea { min-height: 75px; resize: vertical; }
+.card {
+  background: white; border: 1px solid var(--border);
+  border-radius: 17px; padding: 15px; margin-bottom: 12px;
+  box-shadow: 0 4px 14px #34215b08;
+}
+.form-card { display: none; }
+.form-card.open { display: block; }
+.field { margin-bottom: 11px; }
+.field label {
+  display: block; margin-bottom: 6px; font-size: 12px;
+  font-weight: bold; color: #625b76;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+.wide { grid-column: 1 / -1; }
+.form-buttons { display: flex; gap: 8px; }
+.form-buttons button { flex: 1; }
+.search { display: flex; gap: 8px; margin-bottom: 12px; }
+.search input { min-width: 0; flex: 1; }
+.filters { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 12px; }
+.filters button {
+  white-space: nowrap; background: white; border: 1px solid var(--border);
+  color: var(--muted); font-size: 11px; padding: 9px 12px; border-radius: 30px;
+}
+.filters button.selected { background: var(--light-purple); color: var(--purple); }
+.client-top { display: flex; justify-content: space-between; gap: 10px; }
+.client-name { font-weight: bold; overflow-wrap: anywhere; }
+.client-type { color: var(--muted); font-size: 12px; margin-top: 5px; }
+.pill {
+  border-radius: 20px; padding: 6px 9px; font-size: 10px;
+  font-weight: bold; background: var(--light-purple); color: var(--purple);
+  height: fit-content; white-space: nowrap;
+}
+.pill.interested, .pill.confirmed { background: #e5f7ef; color: var(--green); }
+.pill.follow-up { background: #fff2df; color: var(--orange); }
+.pill.not-interested { background: #fff0f2; color: var(--red); }
+.client-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+.info { font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+.info strong { display: block; margin-top: 4px; color: var(--text); font-size: 12px; }
+.actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+.actions button { font-size: 11px; padding: 9px 10px; }
+.empty { text-align: center; padding: 28px 12px; color: var(--muted); }
+.empty .emoji { font-size: 30px; margin-bottom: 9px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { background: white; border: 1px solid var(--border); border-radius: 17px; padding: 15px; }
+.stat-icon { font-size: 20px; margin-bottom: 12px; }
+.stat-number { font-size: 28px; font-weight: bold; }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.due-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.due-item:last-child { border: 0; }
+.due-item strong { font-size: 13px; }
+.due-item p { font-size: 11px; color: var(--muted); margin: 5px 0; }
+.backup h3 { font-size: 16px; margin: 0 0 7px; }
+.backup p { font-size: 12px; line-height: 1.5; color: var(--muted); }
+.backup button { width: 100%; }
+.warning {
+  padding: 12px; border-radius: 12px; background: #fff7e8;
+  color: #795318; font-size: 12px; line-height: 1.5;
+}
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 5;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  background: white; border-top: 1px solid var(--border);
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+}
+.nav-btn {
+  background: transparent; color: #9690a8; border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; padding: 7px; font-size: 10px;
+}
+.nav-btn .icon { font-size: 21px; }
+.nav-btn.active { color: var(--purple); background: var(--light-purple); }
+.toast {
+  display: none; position: fixed; bottom: 95px; left: 50%;
+  transform: translateX(-50%); background: #29243b; color: white;
+  border-radius: 12px; padding: 12px 16px; font-size: 12px; z-index: 20;
+  max-width: 90%; text-align: center;
+}
+.toast.show { display: block; }
+#pdfArea { display: none; }
+@media(max-width:380px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .wide { grid-column: auto; }
+}
+@media(min-width:650px) {
+  .stats { grid-template-columns: repeat(3,1fr); }
+  .bottom-nav { max-width: 760px; left: 50%; transform: translateX(-50%); }
+}
+@media print {
+  body { background: white; padding: 0; }
+  header, main, .bottom-nav, .toast { display: none !important; }
+  #pdfArea { display: block !important; }
+  #pdfArea table { width: 100%; border-collapse: collapse; font-size: 9px; }
+  #pdfArea th, #pdfArea td { border: 1px solid #aaa; padding: 5px; text-align: left; overflow-wrap: anywhere; }
+  #pdfArea h1 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="dp"> <img src="salini.jpeg"></div>
+<header>
+
+  <div class="brand">SALINI WEBWORKS</div>
+  <h1>Client Manager</h1>
+  <p id="subtitle">Keep every lead organised.</p>
+</header>
+
+<main>
+  <!-- SCREEN 1: CLIENTS -->
+  <section class="page active" id="clientsPage">
+    <div class="heading">
+      <div><h2>My Clients</h2><div class="muted" id="clientCount">0 clients</div></div>
+      <button class="primary" id="addBtn">＋ Add client</button>
+    </div>
+
+    <div class="card form-card" id="formCard">
+      <div class="heading">
+        <h2 id="formTitle">Add client</h2>
+        <button class="soft" id="closeForm">✕</button>
+      </div>
+      <form id="clientForm">
+        <input type="hidden" id="clientId">
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">Client / business name *</label>
+            <input id="name" required placeholder="ABC Interiors">
+          </div>
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input id="phone" type="tel" placeholder="Phone number">
+          </div>
+          <div class="field">
+            <label for="business">Business type</label>
+            <input id="business" placeholder="Cafe, salon, clinic...">
+          </div>
+          <div class="field">
+            <label for="service">Service</label>
+            <select id="service">
+              <option>Website</option>
+              <option>QR Menu Flipbook</option>
+              <option>Google Business Profile</option>
+              <option>Video editing</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="status">Lead status</label>
+            <select id="status">
+              <option>New lead</option>
+              <option>Interested</option>
+              <option>Follow-up</option>
+              <option>Confirmed</option>
+              <option>Not interested</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="callDate">Last call date</label>
+            <input id="callDate" type="date">
+          </div>
+          <div class="field">
+            <label for="followDate">Follow-up date</label>
+            <input id="followDate" type="date">
+          </div>
+          <div class="field">
+            <label for="demoSent">Demo sent?</label>
+            <select id="demoSent"><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="field wide">
+            <label for="demoLink">Demo link</label>
+            <input id="demoLink" type="url" placeholder="https://...">
+          </div>
+          <div class="field wide">
+            <label for="response">Client response</label>
+            <input id="response" placeholder="Call me next week...">
+          </div>
+          <div class="field wide">
+            <label for="notes">Notes</label>
+            <textarea id="notes" placeholder="Requirements, quotation, next step..."></textarea>
+          </div>
+        </div>
+        <div class="form-buttons">
+          <button type="button" class="outline" id="cancelBtn">Cancel</button>
+          <button type="submit" class="primary">Save client</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="search">
+      <input id="search" placeholder="Search name, phone, business...">
+      <button class="soft" id="clearSearch">Clear</button>
+    </div>
+    <div class="filters" id="filters">
+      <button class="selected" data-filter="All">All</button>
+      <button data-filter="Due">Due</button>
+      <button data-filter="New lead">New lead</button>
+      <button data-filter="Interested">Interested</button>
+      <button data-filter="Follow-up">Follow-up</button>
+      <button data-filter="Confirmed">Confirmed</button>
+      <button data-filter="Not interested">Not interested</button>
+    </div>
+    <div id="clientList"></div>
+  </section>
+
+  <!-- SCREEN 2: OVERVIEW -->
+  <section class="page" id="overviewPage">
+    <div class="heading">
+      <div><h2>Overview</h2><div class="muted">Your lead progress at a glance</div></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-icon">👥</div><div class="stat-number" id="totalStat">0</div><div class="stat-label">Total leads</div></div>
+      <div class="stat"><div class="stat-icon">💜</div><div class="stat-number" id="interestedStat">0</div><div class="stat-label">Interested</div></div>
+      <div class="stat"><div class="stat-icon">⏰</div><div class="stat-number" id="dueStat">0</div><div class="stat-label">Follow-up due</div></div>
+      <div class="stat"><div class="stat-icon">✅</div><div class="stat-number" id="confirmedStat">0</div><div class="stat-label">Confirmed clients</div></div>
+      <div class="stat"><div class="stat-icon">🔗</div><div class="stat-number" id="demoStat">0</div><div class="stat-label">Demos sent</div></div>
+      <div class="stat"><div class="stat-icon">✨</div><div class="stat-number" id="newStat">0</div><div class="stat-label">New leads</div></div>
+    </div>
+    <div class="card" style="margin-top:15px">
+      <h3 style="margin-top:0">Follow-ups to check</h3>
+      <div id="dueList"></div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: BACKUP -->
+  <section class="page" id="backupPage">
+    <div class="heading">
+      <div><h2>Backup & Export</h2><div class="muted">Keep a safe copy of your clients</div></div>
+    </div>
+    <div class="card backup">
+      <h3>📄 Download PDF</h3>
+      <p>Save a readable copy of all your client details. Choose “Save as PDF” on the print screen.</p>
+      <button class="primary" id="pdfBtn">Download / Save PDF</button>
+    </div>
+    <div class="card backup">
+      <h3>🗂️ JSON backup</h3>
+      <p>Save all client details in a file that can be restored into this app later.</p>
+      <button class="primary" id="jsonBtn">Download JSON backup</button>
+    </div>
+    <div class="card backup">
+      <h3>♻️ Restore JSON backup</h3>
+      <p>Select a JSON backup created by this app. Restoring replaces the current list.</p>
+      <input type="file" id="restoreFile" accept=".json,application/json" style="margin-bottom:10px">
+      <button class="outline" id="restoreBtn">Restore selected JSON</button>
+    </div>
+    <div class="warning">
+      🔒 Client details are saved in this browser on this device. They do not automatically sync to your laptop or another phone. JSON backups are not encrypted, so keep them private.
+    </div>
+  </section>
+
+  <div id="pdfArea"></div>
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="clientsPage">
+    <span class="icon">👤</span><span>Clients</span>
+  </button>
+  <button class="nav-btn" data-page="overviewPage">
+    <span class="icon">▦</span><span>Overview</span>
+  </button>
+  <button class="nav-btn" data-page="backupPage">
+    <span class="icon">⇩</span><span>Backup</span>
+  </button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = "salini_client_manager_v2";
+let clients = [];
+let activeFilter = "All";
+let toastTimer;
+
+const $ = id => document.getElementById(id);
+
+function today() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+}
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+function safeURL(value) {
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch { return ""; }
+}
+function formatDate(value) {
+  if (!value) return "Not set";
+  return new Date(value + "T00:00:00").toLocaleDateString("en-IN", {
+    day:"2-digit", month:"short", year:"numeric"
+  });
+}
+function isDue(c) {
+  return !!c.followDate && c.followDate <= today()
+    && !["Confirmed","Not interested"].includes(c.status);
+}
+function statusClass(status) {
+  return String(status || "").toLowerCase().replace(/\s+/g, "-");
+}
+function notify(message) {
+  const toast = $("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+function loadData() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    clients = Array.isArray(saved) ? saved : [];
+  } catch { clients = []; }
+}
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(clients));
+    renderAll();
+  } catch {
+    notify("Could not save. Please download a JSON backup.");
+  }
+}
+
+function openForm(client = null) {
+  $("clientForm").reset();
+  $("clientId").value = "";
+  $("formTitle").textContent = client ? "Edit client" : "Add client";
+  if (client) {
+    ["name","phone","business","service","status","callDate","followDate",
+     "demoSent","demoLink","response","notes"].forEach(key => {
+      $(key).value = client[key] ?? "";
+    });
+    $("clientId").value = client.id;
+  }
+  $("formCard").classList.add("open");
+  $("formCard").scrollIntoView({behavior:"smooth", block:"start"});
+}
+function closeForm() {
+  $("formCard").classList.remove("open");
+  $("clientForm").reset();
+}
+$("addBtn").addEventListener("click", () => openForm());
+$("closeForm").addEventListener("click", closeForm);
+$("cancelBtn").addEventListener("click", closeForm);
+
+$("clientForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const id = $("clientId").value ||
+    (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
+  const old = clients.find(c => c.id === id);
+  const client = {id, createdAt:old?.createdAt || new Date().toISOString()};
+  ["name","phone","business","service","status","callDate","followDate",
+   "demoSent","demoLink","response","notes"].forEach(key => {
+    client[key] = $(key).value.trim();
+  });
+  const index = clients.findIndex(c => c.id === id);
+  if (index >= 0) clients[index] = client;
+  else clients.unshift(client);
+  saveData();
+  closeForm();
+  notify(index >= 0 ? "Client updated" : "Client saved");
+});
+
+function filteredClients() {
+  const query = $("search").value.trim().toLowerCase();
+  return clients.filter(c => {
+    const searchMatch = [c.name,c.phone,c.business,c.service,c.response,c.notes]
+      .some(value => String(value || "").toLowerCase().includes(query));
+    const filterMatch = activeFilter === "All" ||
+      (activeFilter === "Due" ? isDue(c) : c.status === activeFilter);
+    return searchMatch && filterMatch;
+  });
+}
+
+function renderClients() {
+  $("clientCount").textContent = `${clients.length} client${clients.length === 1 ? "" : "s"} saved`;
+  const rows = filteredClients();
+  if (!rows.length) {
+    $("clientList").innerHTML = `<div class="card empty">
+      <div class="emoji">🗂️</div><strong>${clients.length ? "No matching clients" : "No clients yet"}</strong>
+      <p class="muted">${clients.length ? "Try another filter." : "Tap Add client to save your first lead."}</p>
+    </div>`;
+    return;
+  }
+  $("clientList").innerHTML = rows.map(c => {
+    const dueText = c.followDate
+      ? (isDue(c) ? (c.followDate < today() ? "OVERDUE · " : "DUE TODAY · ") : "Follow-up · ") + formatDate(c.followDate)
+      : "Not set";
+    const link = safeURL(c.demoLink);
+    const hasPhone = String(c.phone || "").replace(/\D/g, "").length > 0;
+    return `<article class="card">
+      <div class="client-top">
+        <div><div class="client-name">${escapeHTML(c.name)}</div>
+        <div class="client-type">${escapeHTML(c.business || c.service || "Business not specified")}</div></div>
+        <span class="pill ${statusClass(c.status)}">${escapeHTML(c.status)}</span>
+      </div>
+      <div class="client-info">
+        <div class="info">Phone<strong>${escapeHTML(c.phone || "Not added")}</strong></div>
+        <div class="info">Follow-up<strong style="color:${isDue(c) ? "var(--red)" : "inherit"}">${escapeHTML(dueText)}</strong></div>
+        <div class="info">Service<strong>${escapeHTML(c.service || "Not set")}</strong></div>
+        <div class="info">Demo sent<strong>${escapeHTML(c.demoSent || "No")}</strong></div>
+        ${c.response ? `<div class="info wide">Client response<strong>${escapeHTML(c.response)}</strong></div>` : ""}
+        ${c.notes ? `<div class="info wide">Notes<strong>${escapeHTML(c.notes)}</strong></div>` : ""}
+      </div>
+      <div class="actions">
+        ${hasPhone ? `<button class="soft" onclick="callClient('${c.id}')">☎ Call</button>
+        <button class="soft" onclick="whatsappClient('${c.id}')">WhatsApp</button>` : ""}
+        ${link ? `<button class="soft" onclick="openDemo('${c.id}')">View demo</button>` : ""}
+        <button class="outline" onclick="editClient('${c.id}')">Edit</button>
+        <button class="danger" onclick="deleteClient('${c.id}')">Delete</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+window.callClient = id => {
+  const c = clients.find(item => item.id === id);
+  if (c?.phone) location.href = "tel:" + c.phone.replace(/[^\d+]/g, "");
+};
+window.whatsappClient = id => {
+  const c = clients.find(item => item.id === id);
+  if (!c?.phone) return;
+  let number = c.phone.replace(/\D/g, "");
+  if (number.length === 10) number = "91" + number;
+  window.open("https://wa.me/" + number, "_blank", "noopener");
+};
+window.openDemo = id => {
+  const c = clients.find(item => item.id === id);
+  const url = safeURL(c?.demoLink);
+  if (url) window.open(url, "_blank", "noopener");
+};
+window.editClient = id => {
+  const c = clients.find(item => item.id === id);
+  if (c) openForm(c);
+};
+window.deleteClient = id => {
+  const c = clients.find(item => item.id === id);
+  if (!c || !confirm(`Delete ${c.name}?`)) return;
+  clients = clients.filter(item => item.id !== id);
+  saveData();
+  notify("Client deleted");
+};
+
+function renderOverview() {
+  const due = clients.filter(isDue);
+  $("totalStat").textContent = clients.length;
+  $("interestedStat").textContent = clients.filter(c => c.status === "Interested").length;
+  $("dueStat").textContent = due.length;
+  $("confirmedStat").textContent = clients.filter(c => c.status === "Confirmed").length;
+  $("demoStat").textContent = clients.filter(c => c.demoSent === "Yes").length;
+  $("newStat").textContent = clients.filter(c => c.status === "New lead").length;
+
+  $("dueList").innerHTML = due.length ? due
+    .sort((a,b) => a.followDate.localeCompare(b.followDate))
+    .map(c => `<div class="due-item">
+      <strong>${escapeHTML(c.name)}</strong>
+      <p>${escapeHTML(c.phone || "No phone")} · ${escapeHTML(c.status)}</p>
+      <p style="color:var(--red);font-weight:bold">${escapeHTML(c.followDate < today() ? "Overdue" : "Due today")} · ${escapeHTML(formatDate(c.followDate))}</p>
+      <button class="soft" onclick="editClient('${c.id}')">Edit client</button>
+    </div>`).join("")
+    : `<div class="empty"><div class="emoji">🎉</div><strong>No follow-ups due</strong>
+       <p class="muted">Your due list will appear here.</p></div>`;
+}
+function renderAll() { renderClients(); renderOverview(); }
+
+$("search").addEventListener("input", renderClients);
+$("clearSearch").addEventListener("click", () => {
+  $("search").value = "";
+  renderClients();
+});
+$("filters").addEventListener("click", event => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+  activeFilter = button.dataset.filter;
+  document.querySelectorAll("#filters button").forEach(b =>
+    b.classList.toggle("selected", b === button));
+  renderClients();
+});
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(b =>
+      b.classList.toggle("active", b === button));
+    document.querySelectorAll(".page").forEach(page =>
+      page.classList.toggle("active", page.id === button.dataset.page));
+    $("subtitle").textContent =
+      button.dataset.page === "clientsPage" ? "Keep every lead organised." :
+      button.dataset.page === "overviewPage" ? "Your lead progress at a glance." :
+      "Download and restore your backups.";
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+});
+
+function downloadFile(filename, content, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+$("jsonBtn").addEventListener("click", () => {
+  const backup = {
+    app:"Salini Client Manager",
+    version:2,
+    exportedAt:new Date().toISOString(),
+    clients
+  };
+  downloadFile("salini_clients_backup_" + today() + ".json",
+    JSON.stringify(backup, null, 2), "application/json");
+  notify("JSON backup downloaded");
+});
+
+$("restoreBtn").addEventListener("click", () => {
+  const file = $("restoreFile").files[0];
+  if (!file) { notify("Please select a JSON backup first"); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      const list = Array.isArray(parsed) ? parsed : parsed.clients;
+      if (!Array.isArray(list)) throw new Error("Invalid backup");
+      if (!confirm(`Restore ${list.length} clients? This replaces the current list.`)) return;
+      clients = list.filter(c => c && typeof c === "object" && c.name)
+        .map(c => ({...c, id:String(c.id || Date.now() + Math.random())}));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clients));
+      renderAll();
+      $("restoreFile").value = "";
+      notify("Backup restored");
+    } catch {
+      notify("Invalid JSON backup. Please choose a backup from this app.");
+    }
+  };
+  reader.readAsText(file);
+});
+
+$("pdfBtn").addEventListener("click", () => {
+  const sorted = [...clients].sort((a,b) => (a.name || "").localeCompare(b.name || ""));
+  const td = value => `<td>${escapeHTML(value || "")}</td>`;
+  $("pdfArea").innerHTML = `
+    <h1>Salini Webworks — Client Details</h1>
+    <p>Exported: ${escapeHTML(formatDate(today()))} · Total clients: ${clients.length}</p>
+    <table><thead><tr>
+      ${["Client name","Phone","Business","Service","Status","Last call","Follow-up date","Demo sent","Demo link","Response","Notes"].map(h => `<th>${h}</th>`).join("")}
+    </tr></thead><tbody>
+    ${sorted.map(c => `<tr>${[
+      c.name,c.phone,c.business,c.service,c.status,
+      c.callDate ? formatDate(c.callDate) : "",
+      c.followDate ? formatDate(c.followDate) : "",
+      c.demoSent,c.demoLink,c.response,c.notes
+    ].map(td).join("")}</tr>`).join("")}
+    </tbody></table>`;
+  window.print();
+});
+
+loadData();
+renderAll();
+</script>
+</body>
+</html>
