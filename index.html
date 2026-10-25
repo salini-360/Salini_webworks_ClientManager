@@ -641,7 +641,7 @@ window.deleteClient = async id => {
   const { error } = await supabaseClient
     .from("clients")
     .delete()
-    .eq("id", id);
+    .eq("client_key", id);
 
   if (error) {
     alert("Delete failed: " + error.message);
@@ -654,7 +654,6 @@ window.deleteClient = async id => {
 
   notify("Client deleted successfully");
 };
-
 function renderOverview() {
   const due = clients.filter(isDue);
   $("totalStat").textContent = clients.length;
