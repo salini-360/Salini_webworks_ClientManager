@@ -633,12 +633,26 @@ window.editClient = id => {
   const c = clients.find(item => item.id === id);
   if (c) openForm(c);
 };
-window.deleteClient = id => {
+window.deleteClient = async id => {
   const c = clients.find(item => item.id === id);
+
   if (!c || !confirm(`Delete ${c.name}?`)) return;
+
+  const { error } = await supabaseClient
+    .from("clients")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Delete failed: " + error.message);
+    return;
+  }
+
   clients = clients.filter(item => item.id !== id);
-  saveData();
-  notify("Client deleted");
+
+  await loadData();
+
+  notify("Client deleted successfully");
 };
 
 function renderOverview() {
