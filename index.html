@@ -9,6 +9,8 @@
 <link rel="icon" type="image/jpeg" href="./app-logo.jpeg">
 <link rel="apple-touch-icon" href="./app-logo.jpeg">
 <link rel="manifest" href="./manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 :root {
   --purple: #7048d9;
@@ -30,11 +32,119 @@ body {
   background: var(--bg);
 }
 
+#loginScreen .login-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #ede9fe;
+  color: #7c3aed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  margin: 0 auto 18px;
+}
+
+  #loginScreen {
+    max-width: 380px !important;
+    margin: 60px auto !important;
+    padding: 32px 26px !important;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #eee6ff !important;
+    border-radius: 22px !important;
+    box-shadow: 0 12px 40px rgba(92, 45, 145, 0.12);
+    font-family: Arial, sans-serif;
+  }
+
+  #loginScreen h2 {
+    margin: 0 0 8px;
+    color: #7c3aed;
+    font-size: 27px;
+    text-align: center;
+    font-weight: 800;
+  }
+
+  #loginScreen h3 {
+    margin: 0 0 28px;
+    color: #55516a;
+    font-size: 17px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  #loginScreen label {
+    display: block;
+    margin-bottom: 7px;
+    color: #302747;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  #loginScreen input {
+    width: 100%;
+    padding: 13px 14px !important;
+    margin: 0 0 20px !important;
+    box-sizing: border-box;
+    border: 1px solid #ded6ed;
+    border-radius: 10px;
+    background: #fcfaff;
+    color: #29233a;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  #loginScreen input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+  }
+
+  #loginScreen input::placeholder {
+    color: #a39bb4;
+  }
+
+  #loginScreen button {
+    width: 100%;
+    padding: 14px !important;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  #loginScreen button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(109, 40, 217, 0.25);
+  }
+
+  #loginScreen #loginMessage {
+    margin: 16px 0 0;
+    color: #dc2626;
+    font-size: 13px;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 480px) {
+    #loginScreen {
+      margin: 30px 16px !important;
+      max-width: none !important;
+      width: auto;
+      padding: 28px 22px !important;
+    }
+  }
+
+
 .dp img{
 width:100px;
 height:100px;
 float:left;
-border-radius:70px;
+border-radius:30px 30px 30px 30px;
 padding:5px 5px 0px 0px;
 }
 
@@ -90,6 +200,28 @@ textarea { min-height: 75px; resize: vertical; }
 .form-buttons button { flex: 1; }
 .search { display: flex; gap: 8px; margin-bottom: 12px; }
 .search input { min-width: 0; flex: 1; }
+
+.service-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.service-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #7c3aed;
+  border-radius: 10px;
+  background: white;
+  color: #7c3aed;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.service-btn.selected {
+  background: #7c3aed;
+  color: white;
+}
 .filters { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 12px; }
 .filters button {
   white-space: nowrap; background: white; border: 1px solid var(--border);
@@ -172,13 +304,17 @@ textarea { min-height: 75px; resize: vertical; }
 </head>
 <body>
 <div id="loginScreen" style="max-width:350px;margin:80px auto;padding:25px;border:1px solid #ddd;border-radius:12px;">
-  <h2>Salini Webworks</h2>
+<div class="login-icon">
+  <i class="fa-solid fa-user"></i>
+</div> 
+ <h2>Salini Webworks</h2>
   <h3>Client Manager Login</h3>
 
   <form id="loginForm">
     <label>Email</label>
+	
     <input id="loginEmail" type="email" required
-      placeholder="Your email"
+      placeholder="Your email" 
       style="width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
 
     <label>Password</label>
@@ -224,9 +360,65 @@ textarea { min-height: 75px; resize: vertical; }
             <label for="phone">Phone number</label>
             <input id="phone" type="tel" placeholder="Phone number">
           </div>
+		  
+<div class="field">
+  <label for="district">District</label>
+  <select id="district">
+    <option value="">Choose district</option>
+    <option>Ariyalur</option>
+    <option>Chengalpattu</option>
+    <option>Chennai</option>
+    <option>Coimbatore</option>
+    <option>Cuddalore</option>
+    <option>Dharmapuri</option>
+    <option>Dindigul</option>
+    <option>Erode</option>
+    <option>Kallakurichi</option>
+    <option>Kancheepuram</option>
+    <option>Kanniyakumari</option>
+    <option>Karur</option>
+    <option>Krishnagiri</option>
+    <option>Madurai</option>
+    <option>Mayiladuthurai</option>
+    <option>Nagapattinam</option>
+    <option>Namakkal</option>
+    <option>Nilgiris</option>
+    <option>Perambalur</option>
+    <option>Pudukkottai</option>
+    <option>Ramanathapuram</option>
+    <option>Ranipet</option>
+    <option>Salem</option>
+    <option>Sivaganga</option>
+    <option>Tenkasi</option>
+    <option>Thanjavur</option>
+    <option>Theni</option>
+    <option>Thoothukudi</option>
+    <option>Tiruchirappalli</option>
+    <option>Tirunelveli</option>
+    <option>Tirupathur</option>
+    <option>Tiruppur</option>
+    <option>Tiruvallur</option>
+    <option>Tiruvannamalai</option>
+    <option>Tiruvarur</option>
+    <option>Vellore</option>
+    <option>Viluppuram</option>
+    <option>Virudhunagar</option>
+  </select>
+</div>
+
           <div class="field">
             <label for="business">Business type</label>
-            <input id="business" placeholder="Cafe, salon, clinic...">
+            <select id="business">
+			<option value="">Choose type</option>
+			<option>Gym</option>
+			<option>Cafe / Restaurant</option>
+			<option>Clinic / Dentist</option>
+			<option>Interior Design</option>
+			<option>Salon / Makeup</option>
+			<option>Furniture</option>
+			<option>Retail / Shop</option>
+			<option>Other</option>
+			</select>
           </div>
           <div class="field">
             <label for="service">Service</label>
@@ -245,6 +437,7 @@ textarea { min-height: 75px; resize: vertical; }
               <option>Interested</option>
               <option>Follow-up</option>
               <option>Confirmed</option>
+			  <option>No Response</option>
               <option>Not interested</option>
             </select>
           </div>
@@ -266,7 +459,18 @@ textarea { min-height: 75px; resize: vertical; }
           </div>
           <div class="field wide">
             <label for="response">Client response</label>
-            <input id="response" placeholder="Call me next week...">
+			<select id="response">
+            <option value="">Choose response</option>
+			<option>Asked to call later</option>
+			<option>Interested,send details</option>
+			<option>Needs to discuss with partner</option>
+			<option>Price too high</option>
+			<option>Already has a website</option>
+			<option>Not interested</option>
+			<option>No answer</option>
+			<option>Asked to WhatsApp details</option>
+			<option>Other</option>
+			</select>
           </div>
           <div class="field wide">
             <label for="notes">Notes</label>
@@ -284,6 +488,10 @@ textarea { min-height: 75px; resize: vertical; }
       <input id="search" placeholder="Search name, phone, business...">
       <button class="soft" id="clearSearch">Clear</button>
     </div>
+	<div class="service-tabs">
+  <button class="service-btn selected" data-service="Website">Website</button>
+  <button class="service-btn" data-service="QR Menu">QR Menu</button>
+</div>
     <div class="filters" id="filters">
       <button class="selected" data-filter="All">All</button>
       <button data-filter="Due">Due</button>
@@ -302,12 +510,12 @@ textarea { min-height: 75px; resize: vertical; }
       <div><h2>Overview</h2><div class="muted">Your lead progress at a glance</div></div>
     </div>
     <div class="stats">
-      <div class="stat"><div class="stat-icon">👥</div><div class="stat-number" id="totalStat">0</div><div class="stat-label">Total leads</div></div>
-      <div class="stat"><div class="stat-icon">💜</div><div class="stat-number" id="interestedStat">0</div><div class="stat-label">Interested</div></div>
-      <div class="stat"><div class="stat-icon">⏰</div><div class="stat-number" id="dueStat">0</div><div class="stat-label">Follow-up due</div></div>
-      <div class="stat"><div class="stat-icon">✅</div><div class="stat-number" id="confirmedStat">0</div><div class="stat-label">Confirmed clients</div></div>
-      <div class="stat"><div class="stat-icon">🔗</div><div class="stat-number" id="demoStat">0</div><div class="stat-label">Demos sent</div></div>
-      <div class="stat"><div class="stat-icon">✨</div><div class="stat-number" id="newStat">0</div><div class="stat-label">New leads</div></div>
+      <div class="stat"><div class="stat-icon"><i class="fa-solid fa-user" style="color: rgb(141, 15, 235);"></i></div><div class="stat-number" id="totalStat">0</div><div class="stat-label">Total leads</div></div>
+      <div class="stat"><div class="stat-icon"><i class="fa-regular fa-heart" style="color: rgb(141, 15, 235);"></i></div><div class="stat-number" id="interestedStat">0</div><div class="stat-label">Interested</div></div>
+      <div class="stat"><div class="stat-icon"><i class="fa-solid fa-user-clock" style="color: rgb(141, 15, 235);"></i></div><div class="stat-number" id="dueStat">0</div><div class="stat-label">Follow-up due</div></div>
+      <div class="stat"><div class="stat-icon"><i class="fa-regular fa-circle-check" style="color: rgb(141, 15, 235);"></i></div><div class="stat-number" id="confirmedStat">0</div><div class="stat-label">Confirmed clients</div></div>
+      <div class="stat"><div class="stat-icon"><i class="fa-solid fa-share-from-square" style="color: rgb(141, 15, 235);"></i></div><div class="stat-number" id="demoStat">0</div><div class="stat-label">Demos sent</div></div>
+      <div class="stat"><div class="stat-icon"><i class="fa-solid fa-file-circle-plus" style="color: rgb(141, 15, 235);"></i></div><div class="stat-number" id="newStat">0</div><div class="stat-label">New leads</div></div>
     </div>
     <div class="card" style="margin-top:15px">
       <h3 style="margin-top:0">Follow-ups to check</h3>
@@ -321,23 +529,23 @@ textarea { min-height: 75px; resize: vertical; }
       <div><h2>Backup & Export</h2><div class="muted">Keep a safe copy of your clients</div></div>
     </div>
     <div class="card backup">
-      <h3>📄 Download PDF</h3>
+      <h3><i class="fa-solid fa-file-pdf" style="color: rgb(141, 15, 235);"></i>Download PDF</h3>
       <p>Save a readable copy of all your client details. Choose “Save as PDF” on the print screen.</p>
       <button class="primary" id="pdfBtn">Download / Save PDF</button>
     </div>
     <div class="card backup">
-      <h3>🗂️ JSON backup</h3>
+      <h3><i class="fa-solid fa-file-zipper" style="color: rgb(141, 15, 235);"></i> JSON backup</h3>
       <p>Save all client details in a file that can be restored into this app later.</p>
       <button class="primary" id="jsonBtn">Download JSON backup</button>
     </div>
     <div class="card backup">
-      <h3>♻️ Restore JSON backup</h3>
+      <h3><i class="fa-solid fa-recycle" style="color: rgb(141, 15, 235);"></i> Restore JSON backup</h3>
       <p>Select a JSON backup created by this app. Restoring replaces the current list.</p>
       <input type="file" id="restoreFile" accept=".json,application/json" style="margin-bottom:10px">
       <button class="outline" id="restoreBtn">Restore selected JSON</button>
     </div>
     <div class="warning">
-      🔒 Client details are saved in this browser on this device. They do not automatically sync to your laptop or another phone. JSON backups are not encrypted, so keep them private.
+      <i class="fa-solid fa-lock" style="color: rgb(141, 15, 235);"></i> Client details are saved in this browser on this device. They do not automatically sync to your laptop or another phone. JSON backups are not encrypted, so keep them private.
     </div>
   </section>
 
@@ -347,13 +555,13 @@ textarea { min-height: 75px; resize: vertical; }
 <!-- BOTTOM NAVIGATION -->
 <nav class="bottom-nav">
   <button class="nav-btn active" data-page="clientsPage">
-    <span class="icon">👤</span><span>Clients</span>
+    <span class="icon"><i class="fa-solid fa-circle-user" style="color: rgb(141, 15, 235);"></i></span><span>Clients</span>
   </button>
   <button class="nav-btn" data-page="overviewPage">
-    <span class="icon">▦</span><span>Overview</span>
+    <span class="icon"><i class="fa-solid fa-magnifying-glass-chart" style="color: rgb(141, 15, 235);"></i></span><span>Overview</span>
   </button>
   <button class="nav-btn" data-page="backupPage">
-    <span class="icon">⇩</span><span>Backup</span>
+    <span class="icon"><i class="fa-solid fa-download" style="color: rgb(141, 15, 235);"></i></span><span>Backup</span>
   </button>
 </nav>
 <div class="toast" id="toast"></div>
@@ -426,6 +634,7 @@ async function loadData() {
       createdAt: row.createdAt || row.created_at,
       name: row.name || "",
       phone: row.phone || "",
+	  district:row.district || "",
       business: row.business || "",
       service: row.service || "",
       status: row.status || "",
@@ -462,6 +671,7 @@ async function saveData() {
       user_id: user.id,
       name: client.name || "",
       phone: client.phone || "",
+	  district: client.district || "",
       business: client.business || "",
       service: client.service || "",
       status: client.status || "",
@@ -483,10 +693,13 @@ async function saveData() {
 	  await loadData();
     }
 
-    renderAll();
-    notify("Clients saved successfully!");
+renderAll();
+notify("Clients saved successfully!");
 
-  } catch (error) {
+closeForm();
+  }
+
+  catch (error) {
     console.error("Supabase save error:", error);
     notify("Save failed: " + error.message);
   }
@@ -527,7 +740,7 @@ function openForm(client = null) {
   $("clientId").value = "";
   $("formTitle").textContent = client ? "Edit client" : "Add client";
   if (client) {
-    ["name","phone","business","service","status","callDate","followDate",
+    ["name","phone","district","business","service","status","callDate","followDate",
      "demoSent","demoLink","response","notes"].forEach(key => {
       $(key).value = client[key] ?? "";
     });
@@ -550,31 +763,95 @@ $("clientForm").addEventListener("submit", async event => {
     (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
   const old = clients.find(c => c.id === id);
   const client = {id, createdAt:old?.createdAt || new Date().toISOString()};
-  ["name","phone","business","service","status","callDate","followDate",
+  ["name","phone","district","business","service","status","callDate","followDate",
    "demoSent","demoLink","response","notes"].forEach(key => {
     client[key] = $(key).value.trim();
   });
+  
   const index = clients.findIndex(c => c.id === id);
   if (index >= 0) clients[index] = client;
-  else clients.unshift(client);
-  await saveData();
   
+  else clients.unshift(client);
+
+  await saveData();
+
+  closeForm();
 });
+
+let selectedService = "Website";
+let selectedStatus = "All";
+
+document.querySelectorAll(".service-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedService = button.dataset.service;
+    activeFilter = "All";
+
+    document.querySelectorAll(".service-btn").forEach(btn => {
+      btn.classList.toggle("selected", btn === button);
+    });
+
+    document.querySelectorAll("#filters button").forEach(btn => {
+      btn.classList.toggle(
+        "selected",
+        btn.dataset.filter === "All"
+      );
+    });
+
+    renderAll();
+  });
+});
+document.querySelectorAll("#filters button").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedStatus = button.dataset.filter;
+
+    document.querySelectorAll("#filters button").forEach(btn => {
+      btn.classList.toggle("selected", btn === button);
+    });
+
+    renderAll();
+  });
+});
+
 
 function filteredClients() {
   const query = $("search").value.trim().toLowerCase();
+  const selected = selectedService.trim().toLowerCase();
+
   return clients.filter(c => {
-    const searchMatch = [c.name,c.phone,c.business,c.service,c.response,c.notes]
-      .some(value => String(value || "").toLowerCase().includes(query));
-    const filterMatch = activeFilter === "All" ||
-      (activeFilter === "Due" ? isDue(c) : c.status === activeFilter);
-    return searchMatch && filterMatch;
+    const service = String(c.service || "").trim().toLowerCase();
+
+    // Website and QR Menu service filtering
+    const serviceMatch =
+      selected === "qr menu"
+        ? service.includes("qr menu")
+        : service === selected;
+
+    // Search by client details
+    const searchMatch = [
+      c.name,
+      c.phone,
+      c.business,
+      c.service,
+      c.response,
+      c.notes
+    ].some(value =>
+      String(value || "").toLowerCase().includes(query)
+    );
+
+    // Filter by client status
+    const filterMatch =
+      selectedStatus === "All" ||
+      (selectedStatus === "Due"
+        ? isDue(c)
+        : c.status === selectedStatus);
+
+    return serviceMatch && searchMatch && filterMatch;
   });
 }
 
 function renderClients() {
   $("clientCount").textContent = `${clients.length} client${clients.length === 1 ? "" : "s"} saved`;
-  const rows = filteredClients();
+ const rows = filteredClients();
   if (!rows.length) {
     $("clientList").innerHTML = `<div class="card empty">
       <div class="emoji">🗂️</div><strong>${clients.length ? "No matching clients" : "No clients yet"}</strong>
@@ -598,16 +875,17 @@ function renderClients() {
         <div class="info">Phone<strong>${escapeHTML(c.phone || "Not added")}</strong></div>
         <div class="info">Follow-up<strong style="color:${isDue(c) ? "var(--red)" : "inherit"}">${escapeHTML(dueText)}</strong></div>
         <div class="info">Service<strong>${escapeHTML(c.service || "Not set")}</strong></div>
-        <div class="info">Demo sent<strong>${escapeHTML(c.demoSent || "No")}</strong></div>
+        <div class="info">District<strong>${escapeHTML(c.district || "Not added")}</strong></div>
+		<div class="info">Demo sent<strong>${escapeHTML(c.demoSent || "No")}</strong></div>
         ${c.response ? `<div class="info wide">Client response<strong>${escapeHTML(c.response)}</strong></div>` : ""}
         ${c.notes ? `<div class="info wide">Notes<strong>${escapeHTML(c.notes)}</strong></div>` : ""}
       </div>
       <div class="actions">
-        ${hasPhone ? `<button class="soft" onclick="callClient('${c.id}')">☎ Call</button>
+        ${hasPhone ? `<button class="soft" onclick="callClient('${c.id}')"><i class="fa-solid fa-phone-volume" style="color: rgb(141, 15, 235);"></i> Call</button>
         <button class="soft" onclick="whatsappClient('${c.id}')">WhatsApp</button>` : ""}
-        ${link ? `<button class="soft" onclick="openDemo('${c.id}')">View demo</button>` : ""}
-        <button class="outline" onclick="editClient('${c.id}')">Edit</button>
-        <button class="danger" onclick="deleteClient('${c.id}')">Delete</button>
+        ${link ? `<button class="soft" onclick="openDemo('${c.id}')"><i class="fa-solid fa-share-from-square" style="color: rgb(141, 15, 235);"></i>View demo</button>` : ""}
+        <button class="outline" onclick="editClient('${c.id}')"><i class="fa-regular fa-pen-to-square" style="color: rgb(141, 15, 235);"></i>  Edit</button>
+        <button class="danger" onclick="deleteClient('${c.id}')"><i class="fa-solid fa-trash" style="color: rgb(224, 66, 45);"></i>  Delete</button>
       </div>
     </article>`;
   }).join("");
@@ -679,14 +957,6 @@ function renderAll() { renderClients(); renderOverview(); }
 $("search").addEventListener("input", renderClients);
 $("clearSearch").addEventListener("click", () => {
   $("search").value = "";
-  renderClients();
-});
-$("filters").addEventListener("click", event => {
-  const button = event.target.closest("[data-filter]");
-  if (!button) return;
-  activeFilter = button.dataset.filter;
-  document.querySelectorAll("#filters button").forEach(b =>
-    b.classList.toggle("selected", b === button));
   renderClients();
 });
 
