@@ -47,19 +47,6 @@ body {
 }
 
 
-#loginScreen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% - 32px);
-  max-width: 380px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-  margin: 0 !important;
-}
-
 
   #loginScreen {
     max-width: 380px !important;
@@ -304,6 +291,16 @@ textarea { min-height: 75px; resize: vertical; }
   .form-grid { grid-template-columns: 1fr; }
   .wide { grid-column: auto; }
 }
+
+@media (min-width: 600px) {
+  #loginScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+}
 @media(min-width:650px) {
   .stats { grid-template-columns: repeat(3,1fr); }
   .bottom-nav { max-width: 760px; left: 50%; transform: translateX(-50%); }
@@ -316,6 +313,8 @@ textarea { min-height: 75px; resize: vertical; }
   #pdfArea th, #pdfArea td { border: 1px solid #aaa; padding: 5px; text-align: left; overflow-wrap: anywhere; }
   #pdfArea h1 { font-size: 20px; }
 }
+
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
