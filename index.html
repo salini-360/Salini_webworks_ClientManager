@@ -292,15 +292,24 @@ textarea { min-height: 75px; resize: vertical; }
   .wide { grid-column: auto; }
 }
 
-@media (min-width: 600px) {
+```css
+@media (max-width: 599px) {
   #loginScreen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100% - 32px) !important;
+    max-width: 380px !important;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 0 !important;
+    box-sizing: border-box;
   }
 }
+```
 @media(min-width:650px) {
   .stats { grid-template-columns: repeat(3,1fr); }
   .bottom-nav { max-width: 760px; left: 50%; transform: translateX(-50%); }
